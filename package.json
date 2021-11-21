@@ -1,0 +1,36 @@
+{
+  "name": "sandbox-aiven",
+  "version": "1.0.0",
+  "description": "A simple REST API service with Express, Aiven for MySQL\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[CSequelize, and Aiven for MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phamt6/sandbox-aiven.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "sequelize",
+    "aiven",
+    "mysql"
+  ],
+  "author": "Hoang P",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phamt6/sandbox-aiven/issues"
+  },
+  "homepage": "https://github.com/phamt6/sandbox-aiven#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.0-alpha.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.3.0"
+  }
+}
