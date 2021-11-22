@@ -25,13 +25,16 @@
 - [Final words](#final-words)
 
 ## Introduction
-This document will guide you to build a simple REST API service with NodeJS and utilize Aiven for MySQL service to flow data within your Express application with Sequelize as the ORM solution. Sequelize as a tool, supports Postgres, MySQL, MariaDB, SQLite, Microsoft SQL Server and lets developers to interact with their relational database using Javascript instead of writing SQL queries. ORMs such as Sequelize are designed to write correct and optimized SQL queries, easy to maintain and update, as well as provide more security from SQL injection attacks.
+This document will guide you to build a simple REST API service with NodeJS and utilize Aiven for MySQL service to flow data within your Express application with Sequelize as the ORM solution. Sequelize as a tool supports Postgres, MySQL, MariaDB, SQLite, Microsoft SQL Server and lets developers interact with their relational database using Javascript instead of writing SQL queries. ORMs such as Sequelize are designed to write correct and optimized SQL queries, easy to maintain and update, as well as provide more security against SQL injection attacks.
+
+## Requirements
+In order to make the most out of this guide, you are expected to have some previous experience working with Javascript, general understanding of relational databases. You will also need to install NodeJS on your working machine, create a free Aiven account to host your MySQL service. Further setup instructions for getting started with Aiven can be found from [Aiven Help](https://help.aiven.io/en/articles/2820646-getting-started-with-aiven-for-mysql)
 
 ## Getting started
-Here are the list of tools that we will be using to build our sandbox project:
+Here is the list of tools that we will be using to build our sandbox project:
 - [NodeJS](https://nodejs.org/en/download/)
 - [Sequelize](https://sequelize.org/master/)
-- [Visual Studio Code](https://code.visualstudio.com/) or your favourite IDE
+- [Visual Studio Code](https://code.visualstudio.com/) or your favorite IDE
 
 Other dependencies
 - [dotenv](https://www.npmjs.com/package/dotenv)
@@ -40,30 +43,19 @@ Other dependencies
 - [fs](https://www.npmjs.com/package/fs)
 - [mysql2](https://www.npmjs.com/package/mysql2)
 
-## Requirements
-In order to make the most out of this guide, you are expected have some previous experience working with Javascript, general understanding of relational database. You will also need to install NodeJS on your working machine, create a free Aiven account to host your MySQL service. Further setup instructions for getting started with Aiven can be found from [Aiven Help](https://help.aiven.io/en/articles/2820646-getting-started-with-aiven-for-mysql)
-
 ## Project structure setup
-Initialize a new Node project is easy by running the command `npm init` within your Terminal, answer all of the questions and you are good to move on. The `npm` commands helps us to setup our project folder with the provided information from your answers, you will notice a new file has been created under your project folder as `package.json`, the content of which should look somewhat as in the following
+Initializing a new Node project is easy by running the command `npm init` within your Terminal. The `npm` command helps us to set up our project folder with the provided information from your answers. A new file is now created under your project folder as `package.json`, its content looks somewhat as in the following
 
 ![image](./img/package-json-init.png)
 
-Next we install the project dependencies with the following command
+Next, we install the project dependencies with the following command
 ```console
 npm install --save express dotenv sequelize fs mysql2
 ```
 
-Once the installation has completed, a new folder called `node_modules` is added under your project structure, where NPM keeps the source code of the packages you have just installed. And at the bottom of the `package.json` file, you will find the details of the dependencies that have been added to your current project.
+Once the installation is complete, a new folder called `node_modules` is added under your project structure, where NPM keeps the source code of installed packages. Within the `package.json` file, you will find the details of the dependencies that have been added to your current project.
 
 ![image](./img/dependencies.png)
-
-```text
-app/
-├── .gitignore
-├── .env
-├── index.js
-└── package.json
-```
 
 The `.env` file will be the place where we keep environment variables and protect secure information such as authentication data, port number, database host, etc.
 
@@ -72,7 +64,7 @@ The `.gitignore` file content helps us specify which files and folders are to be
 ![image](./img/gitignore.png)
 
 ## Setup Express server
-First, we will use Express to help us creating a new API server using the following code snippet
+First, we will use Express to help us create a new API server using the following code snippet
 
 ```javascript
 const express = require('express');
@@ -93,7 +85,7 @@ Start your Express server by executing the following command within your Termina
 node index.js
 ```
 
-If your server is working correctly, you should now be able to navigate to [localhost:3000](localhost:3000/) and greeted with a **Hello World** message.
+If your server is working correctly, you should now be able to navigate to [localhost:3000](localhost:3000/) and be greeted with a **Hello World** message.
 
 ## Sequelize CLI
 Now we will initialize our Sequelize project by running the following command in the Terminal
@@ -108,7 +100,7 @@ These folders have now been created under your project:
 - **models**: contains all migration files
 - **seeders**: contains all seed files
 
-The `ca.pem` file is required to establish a connection with your **Aiven for MySQL** database and can be downloaded from the Aiven service interface and place it under the same `config` folder for easy reference. You will also need to create an `.env` file at the root of your project folder, and provide the following parameters (Database Name, Host, Port, User, Password) from your Aiven Console so you can make a reference to them with the `dotenv` package.
+The `ca.pem` file is required to establish a connection with your **Aiven for MySQL** database and can be downloaded from the Aiven service interface. I will place it under the same `config` folder for easy reference. You will also need to create an `.env` file at the root of your project folder, and provide the following parameters (Database Name, Host, Port, User, Password) from your Aiven Console so you can make a reference to them with the `dotenv` package.
 
 ![image](/img/aiven-config.png)
 
@@ -177,7 +169,7 @@ With all configurations in place, we are now ready to create a new database for 
 npx sequelize-cli db:create
 ```
 
-Output should look somewhat as following:
+The output should look somewhat as follows:
 ```console
 Sequelize CLI [Node: 16.13.0, CLI: 6.3.0, ORM: 6.12.0-alpha.1]
 
@@ -186,7 +178,7 @@ Using environment "development".
 Database defaultdb_dev created.
 ```
 
-Let's populate some data, starting with creating a table within our connected database. The CLI will help us create a `Model` which acts as a representation of the table we are creating or update. We can achieve with the following command:
+Let's populate some data, starting with creating a table within our connected database. The CLI will help us create a `Model` which acts as a representation of the table we are creating or updating. We can achieve this with the following command:
 
 ```console
 npx sequelize-cli model:generate --name Post --attributes title:string,content:string,author:string
@@ -228,7 +220,7 @@ seeders folder at "C:\Users\black\Documents\sandbox-aiven\seeders" already exist
 New seed was created at C:\Users\black\Documents\sandbox-aiven\seeders\20211121182555-sample-posts.js .
 ```
 
-Now if you navigate under the new Seed file that has just been created, there are the `Up()` and `Down()` functions which correspondingly let us define **how to introduce new changes**, and **how to undo changes**. We will edit them as following to add some new sample post data:
+Now if you navigate under the new Seed file that has just been created, there are the `Up()` and `Down()` functions which correspondingly let us define **how to introduce new changes**, and **how to undo changes**. We will edit them as follows to add some new sample post data:
 
 ```javascript
 let now = new Date();
@@ -282,7 +274,7 @@ Using environment "development".
 ```
 
 ## Build REST API
-Next we will add some extra Javascript code to complete our application as a REST API with some test routes. First we need to modify the `models/index.js` file so that it will look for the correct configuration under `config.js` file instead of `config.json`
+Next, we will add some extra Javascript code to complete our application as a REST API with some test routes. First, we need to modify the `models/index.js` file so that it will look for the correct configuration under `config.js` file instead of `config.json`
 
 ```javascript
 const config = require(__dirname + '/../config/config.js')[env];
@@ -350,7 +342,26 @@ app.delete('/post/:author', (req, res) => {
 });
 ```
 
+The final project folder structure is as follows:
+```text
+app/
+├── config/
+│   ├── ca.pem
+│   └── config.js
+├── migrations/
+├── models/
+│   ├── index.js
+│   └── post.js
+├── seeders/
+├── .gitignore
+├── .env
+├── index.js
+└── package.json
+```
+
 ## Final words
 If you sticked around until this point and successfully executed our sample codes and commands, congratulations because you have successfully expanded your developer toolkit.
+
+Sample code implementation used in this guide can be found from <https://github.com/phamt6/sandbox-aiven.git>
 
 Keep calm and code on :metal:
